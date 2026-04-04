@@ -1,0 +1,59 @@
+pret-bancaire-api documentation:
+
+    1. Creating a db in Postgres:
+        - CREATE DATABASE pret_bancaire_db;
+        - \c pret_bancaire_db (to connect with the db)
+
+    2. Creating tables in Postgres:
+        - CREATE TABLE users (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(30),
+            email VARCHAR(30),
+            password VARCHAR(255) NOT NULL,
+            role VARCHAR(20) DEFAULT 'user',
+            refresh_token TEXT
+        );
+
+    3. Setting up backend:
+        - mkdir pret-bancaire-api && cd pret_bancaire_db
+        - npm init -y (to create package.json)
+        - npm i express pg (to install express and pg (node-postgres) modules)
+        - Creation of index.js (the entry point for the server)
+        - npm install -D nodemon (for autoload with npm run dev)
+
+    4. Connecting to a Postgres db from Nodejs:
+        - Creation of config/database.js (Configuration of the connection)
+            (using pg module to create a pool of connections)
+        - npm install dotenv
+            (.env for storing sensible datas like password)
+
+    5. Creating routes for CRUD operations:
+        - npm install bcrypt (module for hashing password)
+        - models/: functions that communicate directly with the PostgreSQL DB
+        - controllers/: logic of query processing
+        - routes/: HTTP routes
+    
+    6. Make endpoint routes
+        router.get('/users', userController.getAllUsers)
+        router.get('/users/:id', userController.getUserById)
+        router.post('/users', userController.createUser)
+        router.put('/users/:id', userController.updateUser)
+        router.delete('/users/:id', userController.deleteUser)
+
+    7. Handling CORS issues 
+        Browser security policies can block requests from different origins. 
+        To address this issue, use the cors middleware in Express to handle cross-origin resource sharing (CORS)
+        - npm install cors
+    
+    8. Authentification
+        - Creating 2 tokens: Access Token (short expiration date) and Refresh Token (long expiration date)
+          So, if Access Token is expired => Refresh Token refreshes a new Access Token
+        - npm install jsonwebtoken cookie-parser (module handling tokens)
+        - Add JWT_SECRET and REFRESH_SECRET in .env
+NB: 
+    - In package.json if "type": "module" => import module from "module"
+      elif "type": "commonjs" => const module = require("module")  
+
+    - Put != Patch
+      Put: Used to update or replace an entire resource.
+      Patch: Used to apply partial modifications to a resource.
