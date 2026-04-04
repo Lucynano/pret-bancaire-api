@@ -13,6 +13,15 @@ pret-bancaire-api documentation:
             role VARCHAR(20) DEFAULT 'user',
             refresh_token TEXT
         );
+        - CREATE TABLE pret_bancaire (
+            id SERIAL PRIMARY KEY, 
+            n_compte VARCHAR(20) NOT NULL UNIQUE, 
+            nom_client VARCHAR(30), 
+            nom_banque VARCHAR(30), 
+            MONTANT NUMERIC(15,2) DEFAULT 0, 
+            date_pret TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+            taux_pret NUMERIC(5,2)
+        );
 
     3. Setting up backend:
         - mkdir pret-bancaire-api && cd pret_bancaire_db

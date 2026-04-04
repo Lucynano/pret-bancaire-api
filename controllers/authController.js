@@ -92,8 +92,6 @@ const refreshToken = async (request, response) => {
 
         const dbUser = users[0]
 
-        console.log(dbUser);
-
         const tokens = generateTokens(dbUser)
 
         await userModel.saveRefreshToken(
