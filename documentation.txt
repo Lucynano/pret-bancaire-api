@@ -50,6 +50,10 @@ pret-bancaire-api documentation:
           So, if Access Token is expired => Refresh Token refreshes a new Access Token
         - npm install jsonwebtoken cookie-parser (module handling tokens)
         - Add JWT_SECRET and REFRESH_SECRET in .env
+        - middleware/: routes protection
+        - authController: handling login, register, freshToken and logout
+        - utils/generateToken: generate access and refresh token
+        
 NB: 
     - In package.json if "type": "module" => import module from "module"
       elif "type": "commonjs" => const module = require("module")  

@@ -24,24 +24,12 @@ const getUserById = async (request, response) => {
     }
 }
 
-// POST a new user
-const createUser = async (request, response) => {
-    const { name, email, password, role } = request.body
-    try {
-        const user = await userModel.createUser(name, email, password, role)
-        response.status(201).send(`User added with ID: ${user.id}`)
-    } catch (error) {
-        console.error(error);
-        response.status(500).send("Error creating user")
-    }
-}
-
 // PUT updated data in an existing user
 const updateUser = async (request, response) => {
     const id = parseInt(request.params.id, 10)
-    const { name, email, password } = request.body
+    const { name, email, password, role } = request.body
     try {
-        const user = await userModel.updateUser(id, name, email, password)
+        const user = await userModel.updateUser(id, name, email, password, role)
         response.status(200).send(`User modified with ID: ${user.id}`)
     } catch (error) {
         console.error(error);
@@ -58,14 +46,12 @@ const deleteUser = async (request, response) => {
     } catch (error) {
         console.error(error);
         response.status(500).send("Error deleting user")
-        
     }
 }
 
 module.exports = {
     getAllUsers, 
     getUserById,
-    createUser,
     updateUser,
     deleteUser,
 }
