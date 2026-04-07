@@ -13,6 +13,11 @@ const getAllPretBancaires = async () => {
     return results.rows
 }
 
+const getPretBancaireById = async (id) => {
+    const results = await pool.query('SELECT * FROM pret_bancaire WHERE id = $1', [id])
+    return results.rows[0]
+}
+
 const updatePretBancaire = async (id, compte, nom, banque, montant, date, taux) => {
     const results = await pool.query(
         'UPDATE pret_bancaire SET n_compte = $1, nom_client = $2, nom_banque = $3, montant = $4, date_pret = $5, taux_pret = $6 WHERE id = $7 RETURNING *', 
@@ -43,6 +48,7 @@ const montantMaximal = async () => {
 module.exports = {
     createPretBancaire,
     getAllPretBancaires,
+    getPretBancaireById,
     updatePretBancaire,
     deletePretBancaire,
     montantTotal,

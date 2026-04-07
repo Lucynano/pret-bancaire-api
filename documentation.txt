@@ -10,7 +10,7 @@ pret-bancaire-api documentation:
             name VARCHAR(30),
             email VARCHAR(30),
             password VARCHAR(255) NOT NULL,
-            role VARCHAR(20) DEFAULT 'user',
+            role VARCHAR(20) DEFAULT 'admin',
             refresh_token TEXT
         );
         - CREATE TABLE pret_bancaire (

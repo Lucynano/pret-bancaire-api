@@ -1,9 +1,9 @@
 const pretBancaireModel = require("../models/pretBancaireModel")
 
 const createPretBancaire = async (request, response) => {
-    const { compte, nom, banque, montant, date, taux } = request.body
+    const { n_compte, nom_client, nom_banque, montant, date_pret, taux_pret } = request.body
     try {
-        const pret_bancaire = await pretBancaireModel.createPretBancaire(compte, nom, banque, montant, date, taux)
+        const pret_bancaire = await pretBancaireModel.createPretBancaire(n_compte, nom_client, nom_banque, montant, date_pret, taux_pret)
         response.status(201).json(pret_bancaire)
     } catch (error) {
         console.error(error);
@@ -21,11 +21,23 @@ const getAllPretBancaires = async (request, response) => {
     }
 }
 
+const getPretBancaireById = async (request, response) => {
+    const id = parseInt(request.params.id, 10)
+    try {
+        const pret_bancaire = await pretBancaireModel.getPretBancaireById(id)
+        if (!pret_bancaire) return response.status(404).send("Pret bancaire not found")
+        response.status(200).json(pret_bancaire)
+    } catch (error) {
+        console.error(error);
+        response.status(500).send("Error retrieving pret_bancaire")
+    }
+}
+
 const updatePretBancaire = async (request, response) => {
     const id = parseInt(request.params.id, 10)
-    const { compte, nom, banque, montant, date, taux } = request.body
+    const { n_compte, nom_client, nom_banque, montant, date_pret, taux_pret } = request.body
     try {
-        const pret_bancaire = await pretBancaireModel.updatePretBancaire(id, compte, nom, banque, montant, date, taux)
+        const pret_bancaire = await pretBancaireModel.updatePretBancaire(id, n_compte, nom_client, nom_banque, montant, date_pret, taux_pret)
         response.status(200).send(`Pret bancaire modified with ID: ${pret_bancaire.id}`)
     } catch (error) {
         console.error(error);
@@ -77,6 +89,7 @@ const montantMaximal = async (request, response) => {
 module.exports = {
     createPretBancaire,
     getAllPretBancaires,
+    getPretBancaireById, 
     updatePretBancaire,
     deletePretBancaire,
     montantTotal,
